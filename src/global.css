@@ -1,0 +1,36 @@
+:root {
+	--svelte-orange: #ff3e01;
+	--threejs-black: #444444;
+	--canvas-overlay: #00000088;
+	--canvas-overlay-hover: #00000055;
+	--top-nav-height: 3rem;
+	--accent: #007d7d;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body,
+#svelte-body {
+	height: 100%;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	font-family: 'Overpass', Verdana, Geneva, Tahoma, sans-serif;
+}
+
+::-webkit-scrollbar {
+	width: 0.25rem;
+	height: 0.25rem;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--threejs-black);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--svelte-orange);
+	opacity: 0.5;
+}
