@@ -1,60 +1,38 @@
 <script lang="ts">
 	import { passLayers } from '$lib/data/stores';
-	import { addPassLayer } from '$lib/data/passManager';
 	import { Panel } from 'photon-tools';
 	import DotScreenForm from './forms/DotScreenForm.svelte';
 	import GlitchForm from './forms/GlitchForm.svelte';
 	import FilmForm from './forms/FilmForm.svelte';
 	import UnrealBloomForm from './forms/UnrealBloomForm.svelte';
 	import SAOForm from './forms/SAOForm.svelte';
+	import AddPassButton from './AddPassButton.svelte';
 	function syncPassLayers() {
 		$passLayers = $passLayers;
 	}
-	// $: console.log($passLayers)
 </script>
 
 <div class="ctrl-wrapper space-between">
-	<button on:click={() => addPassLayer('DotScreen')}>Dot</button>
-	<button on:click={() => addPassLayer('Glitch')}>Glitch</button>
-	<button on:click={() => addPassLayer('Film')}>Film</button>
-	<button on:click={() => addPassLayer('UnrealBloom')}>UnrealBloom</button>
-	<button on:click={() => addPassLayer('SAO')}>SAO</button>
+	<AddPassButton />
 </div>
 <div class="layers-wrapper">
-	<Panel>
-		Pass List...
-		{#each $passLayers as layer (layer.id)}
+	{#each $passLayers as layer (layer.id)}
+		<Panel style="margin: 1rem auto;">
 			{#if layer.name === 'DotScreen'}
-				<DotScreenForm {layer} on:input={syncPassLayers} />
+				<DotScreenForm {layer} on:input={syncPassLayers} on:change={syncPassLayers}/>
 			{:else if layer.name === 'Glitch'}
-				<GlitchForm {layer} on:input={syncPassLayers} />
+				<GlitchForm {layer} on:input={syncPassLayers} on:change={syncPassLayers}/>
 			{:else if layer.name === 'Film'}
 				<FilmForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
 			{:else if layer.name === 'UnrealBloom'}
-				<UnrealBloomForm {layer} on:input={syncPassLayers} />
+				<UnrealBloomForm {layer} on:input={syncPassLayers} on:change={syncPassLayers}/>
 			{:else if layer.name === 'SAO'}
 				<SAOForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
 			{/if}
-		{/each}
-	</Panel>
-	<!-- 	
-	{#each $layers as layer (layer.uuid)}
-		<div class="ctrl-wrapper">
-			{#if layer.name.toLowerCase() === 'depth'}
-				<DepthForm {layer} />
-			{:else if layer.name.toLowerCase() === 'fresnel'}
-				<FresnelForm {layer} />
-			{:else if layer.name.toLowerCase() === 'noise'}
-				<NoiseForm {layer} />
-			{:else if layer.name.toLowerCase() === 'displace'}
-				<DisplaceForm {layer} />
-			{:else if layer.name.toLowerCase() === 'gradient'}
-				<GradientForm {layer} />
-			{:else if layer.name.toLowerCase() === 'color'}
-				<ColorForm {layer} />
-			{/if}
-		</div>
-	{/each} -->
+		</Panel>
+	{:else}
+		<h2>Add a pass to get started!</h2>
+	{/each}
 </div>
 
 <style>

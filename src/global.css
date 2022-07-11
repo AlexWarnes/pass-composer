@@ -34,3 +34,11 @@ body,
 	background: var(--svelte-orange);
 	opacity: 0.5;
 }
+
+.flex-spacer {
+	flex-grow: 1;
+}
+
+canvas {
+	max-width: 100%;
+}

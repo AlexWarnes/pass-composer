@@ -4,11 +4,32 @@ export type PassType = 'Glitch' | 'DotScreen' | 'Film' | 'UnrealBloom' | 'SAO';
 export type PassConfig = GlitchProps | DotScreenProps | FilmProps | UnrealBloomProps;
 export type PassLayer = GlitchLayer | DotScreenLayer | FilmLayer | UnrealBloomLayer;
 
+/** ADD PASS CHECKLIST
+ * In types.ts:
+ * [] Add Pass to PassType join
+ * [] Add PassProps interface, add to PassConfig join
+ * [] Add PassLayer interface, add to PassLayer join
+ * 
+ * In passManager.ts:
+ * [] Add newPass(): PassProps fn
+ * [] Add case to newDefaultPass() fn
+ * 
+ * In /components/forms/
+ * [] Create PassForm
+ * 
+ * In /components/ControlPanel
+ * [] Add PassForm to if/else
+ * 
+ * In /components/PassTranslator
+ * [] Add import for Pass
+ * [] Add case to passInstances with props/context (as needed)
+ */
 
 export interface PassLayerMetadata {
 	name: string;
 	id: string;
 	requiresContext: boolean; // if true, r/s/c = useThrelte
+	visible: boolean;
 	// props: GlitchProps | DotScreenProps | FilmProps | UnrealBloomProps;
 }
 export interface GlitchProps {

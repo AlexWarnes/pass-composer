@@ -10,7 +10,7 @@
 				<span>PASS COMPOSER</span>
 			</a>
 		</li>
-		<span class="spacer" aria-hidden="true" />
+		<span class="flex-spacer" aria-hidden="true" />
 		<li>
 			<a href="/canvas" aria-label="Canvas">CANVAS</a>
 		</li>
@@ -33,10 +33,6 @@
 		margin: 0;
 		padding: 0 2rem;
 		height: var(--top-nav-height);
-	}
-
-	.spacer {
-		flex-grow: 1;
 	}
 
   li, a {

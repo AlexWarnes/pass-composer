@@ -73,9 +73,11 @@
 		}
 	});
 
-	$: console.log('new instances:', passInstances);
+	// $: console.log('new instances:', passInstances);
 </script>
 
 {#each passInstances as layer (layer.instance.fsQuad._mesh.uuid)}
-	<Pass pass={layer.instance} />
+	{#if layer.visible}
+		<Pass pass={layer.instance} />
+	{/if}
 {/each}

@@ -50,7 +50,8 @@ const newSAO = (): SAOProps => {
 export function newDefaultPass(type: PassType): PassLayer {
 	const initialConfig = {
 		id: generateUUID(),
-		name: type
+		name: type,
+		visible: true,
 	};
 	const id = generateUUID();
 	const name = type;
@@ -96,9 +97,14 @@ export function newDefaultPass(type: PassType): PassLayer {
 }
 
 export function addPassLayer(type: PassType): void {
-	console.log('add:', type);
 	passLayers.update((current) => {
 		current.push(newDefaultPass(type));
 		return current;
 	});
+}
+
+export function deletePassLayer(id: string): void {
+	passLayers.update((current) => {
+		return current.filter(p => p.id !== id);
+	})
 }

@@ -27,7 +27,6 @@
 	.canvas-wrapper {
 		position: relative;
 		flex-grow: 1;
-		overflow: hidden;
 		height: 100%;
 	}
 
@@ -35,7 +34,7 @@
 		padding: 0 1rem 1rem;
 		height: calc(100% - var(--top-nav-height));
 		width: 25rem;
-		max-width: 25%;
+		max-width: 33%;
 		background: var(--canvas-overlay);
 		color: #fafbfc;
 	}

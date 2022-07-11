@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { DotScreenLayer, FilmLayer, PassLayer } from '$lib/data/types';
 	import { Accordion, ControlGroup, NumberInput, RangeSlider } from 'photon-tools';
+	import LayerActions from '../LayerActions.svelte';
 
 	export let layer: FilmLayer;
 	let open: boolean = true;
@@ -8,6 +9,7 @@
 
 <Accordion title="Film" bind:open on:click={() => (open = !open)}>
 	<ControlGroup>
+		<LayerActions on:change {layer} />
 		<RangeSlider
 			type="FLOAT"
 			label="noiseIntensity: {layer.props.noiseIntensity}"

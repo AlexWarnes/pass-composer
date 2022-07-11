@@ -1,13 +1,15 @@
 <script lang="ts">
 	import type { DotScreenLayer, PassLayer, SAOLayer } from '$lib/data/types';
 	import { Accordion, ControlGroup, NumberInput } from 'photon-tools';
+	import LayerActions from '../LayerActions.svelte';
 
 	export let layer: SAOLayer;
 	let open: boolean = true;
 </script>
 
-<Accordion title="SAO" bind:open>
+<Accordion title="SAO" bind:open on:click={() => (open = !open)}>
 	<ControlGroup>
+		<LayerActions on:change {layer} />
 		<label
 			>useDepthTexture<input
 				type="checkbox"
