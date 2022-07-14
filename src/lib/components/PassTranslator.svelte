@@ -9,6 +9,7 @@
 	// 	import { LUTPass } from 'three/examples/jsm/postprocessing/LUTPass'
 	import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
 	import { SAOPass } from 'three/examples/jsm/postprocessing/SAOPass';
+	import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass';
 
 	// 	import { SSRPass } from 'three/examples/jsm/postprocessing/SSRPass'
 	// 	import { MaskPass } from 'three/examples/jsm/postprocessing/MaskPass'
@@ -30,12 +31,14 @@
 						p.props.angle,
 						p.props.scale > 11 ? undefined : p.props.scale
 					),
-					...p
+					...p,
+          id: p.id + String(Date.now())
 				};
 			case 'Glitch':
 				return {
 					instance: new GlitchPass(p.props.dt_size),
-					...p
+					...p,
+          id: p.id + String(Date.now())
 				};
 			case 'Film':
 				return {
@@ -45,7 +48,8 @@
 						p.props.scanlinesCount,
 						p.props.grayscale
 					),
-					...p
+					...p,
+          id: p.id + String(Date.now())
 				};
 			case 'UnrealBloom':
 				return {
@@ -55,7 +59,8 @@
 						p.props.radius,
 						p.props.threshold
 					),
-					...p
+					...p,
+          id: p.id + String(Date.now())
 				};
 			case 'SAO':
 				return {
@@ -66,7 +71,14 @@
 						p.props.useNormals,
 						p.props.resolution
 					),
-					...p
+					...p,
+          id: p.id + String(Date.now())
+				};
+			case 'Afterimage':
+				return {
+					instance: new AfterimagePass(p.props.damp),
+					...p,
+          id: p.id + String(Date.now())
 				};
 			default:
 				console.error('Unrecognized Pass Layer:', p);
@@ -76,7 +88,7 @@
 	// $: console.log('new instances:', passInstances);
 </script>
 
-{#each passInstances as layer (layer.instance.fsQuad._mesh.uuid)}
+{#each passInstances as layer (layer.id)}
 	{#if layer.visible}
 		<Pass pass={layer.instance} />
 	{/if}

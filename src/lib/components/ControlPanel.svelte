@@ -7,6 +7,7 @@
 	import UnrealBloomForm from './forms/UnrealBloomForm.svelte';
 	import SAOForm from './forms/SAOForm.svelte';
 	import AddPassButton from './AddPassButton.svelte';
+import AfterimageForm from './forms/AfterimageForm.svelte';
 	function syncPassLayers() {
 		$passLayers = $passLayers;
 	}
@@ -28,6 +29,8 @@
 				<UnrealBloomForm {layer} on:input={syncPassLayers} on:change={syncPassLayers}/>
 			{:else if layer.name === 'SAO'}
 				<SAOForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
+			{:else if layer.name === 'Afterimage'}
+				<AfterimageForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
 			{/if}
 		</Panel>
 	{:else}

@@ -2,6 +2,7 @@ import { Vector2 } from 'three';
 import { generateUUID } from 'three/src/math/MathUtils';
 import { passLayers } from './stores';
 import type {
+	AfterimageProps,
 	DotScreenProps,
 	FilmProps,
 	GlitchProps,
@@ -14,7 +15,7 @@ import type {
 const newDotScreen = (): DotScreenProps => {
 	return {
 		center: new Vector2(0, 0),
-		angle: undefined,
+		angle: 0,
 		scale: 10
 	};
 };
@@ -44,6 +45,11 @@ const newSAO = (): SAOProps => {
 		useDepthTexture: false,
 		useNormals: false,
 		resolution: new Vector2(256, 256)
+	};
+};
+const newAfterimage = (): AfterimageProps => {
+	return {
+		damp: 0.96,
 	};
 };
 
@@ -88,6 +94,12 @@ export function newDefaultPass(type: PassType): PassLayer {
 				...initialConfig,
 				requiresContext: true,
 				props: newSAO()
+			};
+		case 'Afterimage':
+			return {
+				...initialConfig,
+				requiresContext: false,
+				props: newAfterimage()
 			};
 		default:
 			const message: string = 'Unrecognized pass type';

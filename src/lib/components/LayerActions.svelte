@@ -12,7 +12,7 @@ import { deletePassLayer } from '$lib/data/passManager';
   <VisibilityCheckbox on:change bind:visible={layer.visible}/>
   <span class="flex-spacer"></span>
 	<button class="delete" title="Delete {layer.name} Pass" on:click={() => deletePassLayer(layer.id)}>
-		<Trash />
+		<Trash height="24" />
 	</button>
 </div>
 

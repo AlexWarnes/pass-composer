@@ -1,8 +1,8 @@
 import type { Camera, Vector2 } from 'three';
 
-export type PassType = 'Glitch' | 'DotScreen' | 'Film' | 'UnrealBloom' | 'SAO';
-export type PassConfig = GlitchProps | DotScreenProps | FilmProps | UnrealBloomProps;
-export type PassLayer = GlitchLayer | DotScreenLayer | FilmLayer | UnrealBloomLayer;
+export type PassType = 'Glitch' | 'DotScreen' | 'Film' | 'UnrealBloom' | 'SAO' | 'Afterimage';
+export type PassConfig = GlitchProps | DotScreenProps | FilmProps | UnrealBloomProps | AfterimageProps;
+export type PassLayer = GlitchLayer | DotScreenLayer | FilmLayer | UnrealBloomLayer | AfterimageLayer;
 
 /** ADD PASS CHECKLIST
  * In types.ts:
@@ -23,6 +23,9 @@ export type PassLayer = GlitchLayer | DotScreenLayer | FilmLayer | UnrealBloomLa
  * In /components/PassTranslator
  * [] Add import for Pass
  * [] Add case to passInstances with props/context (as needed)
+ * 
+ * In /components/AddPassButton
+ * [] Add Pass to layerOptions
  */
 
 export interface PassLayerMetadata {
@@ -77,4 +80,11 @@ export interface SAOProps {
 }
 export interface SAOLayer extends PassLayerMetadata {
 	props: SAOProps | any;
+}
+
+export interface AfterimageProps {
+	damp: number; // 0.96
+}
+export interface AfterimageLayer extends PassLayerMetadata {
+	props: AfterimageProps | any;
 }
