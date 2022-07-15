@@ -7,7 +7,7 @@
 	import UnrealBloomForm from './forms/UnrealBloomForm.svelte';
 	import SAOForm from './forms/SAOForm.svelte';
 	import AddPassButton from './AddPassButton.svelte';
-import AfterimageForm from './forms/AfterimageForm.svelte';
+	import AfterimageForm from './forms/AfterimageForm.svelte';
 	function syncPassLayers() {
 		$passLayers = $passLayers;
 	}
@@ -18,15 +18,15 @@ import AfterimageForm from './forms/AfterimageForm.svelte';
 </div>
 <div class="layers-wrapper">
 	{#each $passLayers as layer (layer.id)}
-		<Panel style="margin: 1rem auto;">
+		<Panel style="margin: 1rem auto; padding: 1rem 0;">
 			{#if layer.name === 'DotScreen'}
-				<DotScreenForm {layer} on:input={syncPassLayers} on:change={syncPassLayers}/>
+				<DotScreenForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
 			{:else if layer.name === 'Glitch'}
-				<GlitchForm {layer} on:input={syncPassLayers} on:change={syncPassLayers}/>
+				<GlitchForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
 			{:else if layer.name === 'Film'}
 				<FilmForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
 			{:else if layer.name === 'UnrealBloom'}
-				<UnrealBloomForm {layer} on:input={syncPassLayers} on:change={syncPassLayers}/>
+				<UnrealBloomForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
 			{:else if layer.name === 'SAO'}
 				<SAOForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
 			{:else if layer.name === 'Afterimage'}
@@ -34,7 +34,7 @@ import AfterimageForm from './forms/AfterimageForm.svelte';
 			{/if}
 		</Panel>
 	{:else}
-		<h2>Add a pass to get started!</h2>
+		<h2 class="empty-message">Add a pass to get started!</h2>
 	{/each}
 </div>
 
@@ -54,5 +54,9 @@ import AfterimageForm from './forms/AfterimageForm.svelte';
 		justify-content: space-between;
 		align-items: center;
 		padding: 0 0.25rem 0 0;
+	}
+
+	.empty-message {
+		margin: 3rem auto;
 	}
 </style>
