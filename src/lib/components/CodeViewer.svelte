@@ -1,9 +1,13 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import { Chevron } from 'photon-tools';
-	// import {Chevron, Copy} from 'photon-tools';
+	import { Chevron, Copy } from 'photon-tools';
+	import { passLayers } from '$lib/data/stores';
+	import type { PassConfig, PassLayer } from '$lib/data/types';
+import type { Vector2 } from 'three';
 	let displayCode = false;
+	let copyImportStatus: 'IDLE' | 'SUCCESS' = 'IDLE';
+	let copyTemplateStatus: 'IDLE' | 'SUCCESS' = 'IDLE';
 	const options = {
 		imports: true,
 		template: true,
@@ -15,10 +19,7 @@
 		}
 	};
 
-	const colorString = (c: any) => {
-		// @ts-ignore
-		return `new THREE.Color("#${c.getHexString()}")`;
-	};
+	const vec2String = (vec2: Vector2): string => `new Vector2(${vec2.x}, ${vec2.y})`
 
 	const syncOptions = (everything: boolean): void => {
 		if (everything) {
@@ -27,142 +28,83 @@
 		}
 	};
 
-	$: syncOptions(options.everything);
-
-	// function stringifyImports({ layers }, opt) {
-	// 	let layerImports = layers.map((l) => l.name[0].toUpperCase() + l.name.substring(1));
-	// 	let imports = '';
-	// 	if (opt.includeThreeImport) {
-	// 		imports += '\nimport * as THREE from "three";\n';
-	// 	}
-
-	// 	if (opt.includeLaminaImport) {
-	// 		imports += `\nimport { \n\tLayerMaterial,\n\t${[...new Set(layerImports)].join(
-	// 			',\n\t'
-	// 		)}\n} from "lamina/vanilla";`;
-	// 	}
-	// 	return imports;
-	// }
-
-	// 	function stringifyMaterial({ baseLayer, layers }) {
-	// 		return `
-	// const laminaMaterial = new LayerMaterial({
-	//   color: "${baseLayer.color}",
-	//   lighting: "${baseLayer.lighting}",
-	//   layers: [
-	//     ${layers.map((l) => stringifyLayer(l)).join('')}
-	//   ]
-	// });
-	//     `;
-	// 	}
-
-	// function stringifyLayer(layer) {
-	// 	switch (layer.name.toLowerCase()) {
-	// 		case 'depth':
-	// 			const depthProps = extractDepthProps(layer);
-	// 			// colorA, colorB, alpha, near, far, origin, mapping, mode, visible
-	// 			return `new Depth({
-	//     colorA: ${colorString(depthProps.colorA)},
-	//     colorB: ${colorString(depthProps.colorB)},
-	//     alpha: ${depthProps.alpha},
-	//     near: ${depthProps.near},
-	//     far: ${depthProps.far},
-	//     origin: [${Object.values(depthProps.origin)}],
-	//     mapping: "${depthProps.mapping}",
-	//     mode: "${depthProps.mode}",
-	//     visible: ${depthProps.visible},
-	//   }),
-	//   `;
-	// 		case 'fresnel':
-	// 			const fresnelProps = extractFresnelProps(layer);
-	// 			// color, alpha, power, intensity, bias, mode, visible
-	// 			return `new Fresnel({
-	//     color: ${colorString(fresnelProps.color)},
-	//     alpha: ${fresnelProps.alpha},
-	//     power: ${fresnelProps.power},
-	//     intensity: ${fresnelProps.intensity},
-	//     bias: ${fresnelProps.bias},
-	//     mode: "${fresnelProps.mode}",
-	//     visible: ${fresnelProps.visible},
-	//   }),
-	//   `;
-	// 		case 'noise':
-	// 			const noiseProps = extractNoiseProps(layer);
-	// 			// colorA, colorB, colorC, colorD, alpha, scale, type, mapping, mode, visible
-	// 			return `new Noise({
-	//     colorA: ${colorString(noiseProps.colorA)},
-	//     colorB: ${colorString(noiseProps.colorB)},
-	//     colorC: ${colorString(noiseProps.colorC)},
-	//     colorD: ${colorString(noiseProps.colorD)},
-	//     alpha: ${noiseProps.alpha},
-	//     scale: ${noiseProps.scale},
-	//     type: "${noiseProps.type}",
-	//     offset: [${Object.values(noiseProps.offset)}],
-	//     mapping: "${noiseProps.mapping}",
-	//     mode: "${noiseProps.mode}",
-	//     visible: ${noiseProps.visible},
-	//   }),
-	//   `;
-	// 		case 'displace':
-	// 			const displaceProps = extractDisplaceProps(layer);
-	// 			// strength, scale, type, mapping, mode, visible
-	// 			return `new Displace({
-	//     strength: ${displaceProps.strength},
-	//     scale: ${displaceProps.scale},
-	//     type: "${displaceProps.type}",
-	//     offset: [${Object.values(displaceProps.offset)}],
-	//     mode: "${displaceProps.mode}",
-	//     visible: ${displaceProps.visible},
-	//   }),
-	//   `;
-	// 		case 'gradient':
-	// 			const gradientProps = extractGradientProps(layer);
-	// 			// colorA, colorB, alpha, contrast, start, end, axes, mapping, visible
-	// 			return `new Gradient({
-	//     colorA: ${colorString(gradientProps.colorA)},
-	//     colorB: ${colorString(gradientProps.colorB)},
-	//     alpha: ${gradientProps.alpha},
-	//     contrast: ${gradientProps.contrast},
-	//     start: ${gradientProps.start},
-	//     end: "${gradientProps.end}",
-	//     axes: "${gradientProps.axes}",
-	//     mapping: "${gradientProps.mapping}",
-	//     visible: ${gradientProps.visible},
-	//   }),
-	//   `;
-	// 		case 'color':
-	// 			const colorProps = extractColorProps(layer);
-	// 			// color, alpha, mode, visible
-	// 			return `new Color({
-	//     color: ${colorString(colorProps.color)},
-	//     alpha: ${colorProps.alpha},
-	//     mode: "${colorProps.mode}",
-	//     visible: ${colorProps.visible},
-	//   }),
-	//   `;
-	// 		default:
-	// 			console.error('Unrecognized layer name:', layer.name);
-	// 			return '';
-	// 	}
-	// }
-	let clickToCopy = (): any => null;
-	let copyStatus = 'IDLE';
+	let clickToCopy = (elementID: string): any => null;
 	onMount(() => {
 		if (window.navigator) {
-			clickToCopy = () => {
+			clickToCopy = (elementID: string): any => {
 				window.navigator.clipboard
 					//@ts-ignore
-					.writeText(document.getElementById('code-wrapper').innerText)
+					.writeText(document.getElementById(elementID).innerText)
 					// TODO: conditionally grab inner text of pre tags, depending on options
 					.then(() => {
 						console.log('Copied!');
-						copyStatus = 'SUCCESS';
-						setTimeout(() => (copyStatus = 'IDLE'), 4000);
+						if (elementID.includes('imports')) {
+							copyImportStatus = 'SUCCESS';
+							setTimeout(() => (copyImportStatus = 'IDLE'), 4000);
+						}
+						if (elementID.includes('template')) {
+							copyTemplateStatus = 'SUCCESS';
+							setTimeout(() => (copyTemplateStatus = 'IDLE'), 4000);
+						}
 					})
 					.catch((err) => console.log('Error copying code', err));
 			};
 		}
 	});
+
+	let importsString: string = '';
+	let contextString: string = '';
+	$: {
+		let allPasses = $passLayers.map((p) => p.name);
+		let uniqueLayers = [...new Set(allPasses)];
+		importsString = uniqueLayers
+			.map((passName) => {
+				switch (passName) {
+					case 'DotScreen':
+						return `import { DotScreenPass } from 'three/examples/jsm/postprocessing/DotScreenPass';\n`;
+					case 'Glitch':
+						return `import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass';\n`;
+					case 'Film':
+						return `import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass';\n`;
+					case 'UnrealBloom':
+						return `import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';\n`;
+					case 'SAO':
+						return `import { SAOPass } from 'three/examples/jsm/postprocessing/SAOPass';\n`;
+					case 'Afterimage':
+						return `import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass';\n`;
+					default:
+						return '';
+				}
+			})
+			.join('');
+		}
+		$: templateString = $passLayers.map((pass: PassLayer) => {
+			switch (pass.name) {
+					case 'DotScreen':
+						return `<Pass pass={new DotScreenPass(${vec2String(pass.props.center)}, ${pass.props.angle}, ${pass.props.scale})} />\n`;
+					case 'Glitch':
+						return `<Pass pass={new GlitchPass(${pass.props.dt_size})} />\n`;
+					case 'Film':
+						return `<Pass pass={new FilmPass(${pass.props.noiseIntensity}, ${pass.props.scanlinesIntensity}, ${pass.props.scanlinesCount}, ${pass.props.grayscale}})} />\n`;
+					case 'UnrealBloom':
+						return `<Pass pass={new UnrealBloomPass(${vec2String(pass.props.resolution)}, ${pass.props.strength}, ${pass.props.radius}, ${pass.props.threshold})} />\n`;
+					case 'SAO':
+						return `<Pass pass={new SAOPass(scene, $camera, ${pass.props.useDepthTexture}, ${pass.props.useNormals}, ${vec2String(pass.props.resolution)})} />\n`;
+					case 'Afterimage':
+						return `<Pass pass={new AfterimagePass(${pass.props.damp})} />\n`;
+					default:
+						return '';
+				}
+		}).join('')
+
+	$: if ($passLayers.some(p => p.requiresContext)) {
+		contextString = `const { renderer, scene, camera } = useThrelte();`;
+	} else {
+		contextString = '';
+	}
+	$: threlteImportString = `import { Pass, ${contextString.length ? 'useThrelte, ': ''}} from 'threlte';`
+	$: threeImportString = $passLayers.some(p => p.props.resolution || p.props.center) ? `import { Vector2 } from 'three';` : '';
+	$: syncOptions(options.everything);
 </script>
 
 <div class="code-container">
@@ -181,32 +123,64 @@
 	</div>
 	{#if displayCode}
 		<div class="code-display" transition:slide>
-<pre id="imports-code-wrapper">
-IMPORTS
-</pre>
-<pre id="template-code-wrapper">
-// TEMPLATE
-{`<Pass />`}
-</pre>
 
-			<div class="options">
-				<label>
-					Imports
-					<input type="checkbox" bind:checked={options.imports} disabled={options.everything} />
-				</label>
-				<label>
-					Template
-					<input type="checkbox" bind:checked={options.template} disabled={options.everything} />
-				</label>
-				<label>
-					Entire threlte Scene
-					<input type="checkbox" bind:checked={options.everything} />
-				</label>
-			</div>
-			<button on:click={clickToCopy} class:success={copyStatus === 'SUCCESS'} class="copy-btn">
-				<!-- <Copy height="16" /> -->
-				{copyStatus === 'SUCCESS' ? 'Copied!' : 'Copy'}
+<!-- IMPORTS CODE -->
+<pre id="imports-code-wrapper">
+{threeImportString}
+{$passLayers.length ? threlteImportString : ''}
+{importsString}
+{contextString}
+</pre>
+			<button
+				on:click={() => clickToCopy('imports-code-wrapper')}
+				class:success={copyImportStatus === 'SUCCESS'}
+				class="copy-btn"
+			>
+				<Copy height="16" />
+				<span>{copyImportStatus === 'SUCCESS' ? 'Copied!' : 'Copy Imports'}</span>
 			</button>
+
+<!-- TEMPLATE CODE -->
+<pre id="template-code-wrapper">
+{templateString}
+</pre>
+			<button
+				on:click={() => clickToCopy('template-code-wrapper')}
+				class:success={copyTemplateStatus === 'SUCCESS'}
+				class="copy-btn"
+			>
+				<Copy height="16" />
+				<span>{copyTemplateStatus === 'SUCCESS' ? 'Copied!' : 'Copy Template'}</span>
+			</button>
+
+<!-- TODO: Copy entire scene option? -->
+
+			<div class="header">
+				<p class="description">
+					JavaScript and threlte template generated for your current set of postprocessing configurations. You can use this as
+					in any project made with threlte.
+				</p>
+				<!-- TODO: add alert to use canvas child component for context-dependent passes -->
+				<p class="try-it-text">Try it in:</p>
+				<div class="repl-row">
+					<ul class="try-it">
+						<li>
+							<a
+								href="https://svelte.dev/repl/4a50ab27ce0243a9a4b8159a6780accd?version=3.46.2"
+								target="_blank"
+								rel="noopener noreferrer">Svelte REPL</a
+							>
+						</li>
+						<li>
+							<a
+								href="https://stackblitz.com/edit/threlte-passcomposer?file=src/lib/PassComposer.svelte"
+								target="_blank"
+								rel="noopener noreferrer">StackBlitz</a
+							>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	{/if}
 </div>
@@ -241,17 +215,17 @@ IMPORTS
 		margin: 0;
 	}
 
+	pre {
+		background-color: #16161c;
+		max-width: 100%;
+		min-width: 100%;
+		overflow: auto;
+		padding: 0.75rem;
+	}
+
 	.header {
 		background-color: #676778;
 		padding: 1rem;
-	}
-	.title-row {
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-	}
-	.header h3 {
-		margin: 0 0 0 1rem;
 	}
 
 	.try-it-text {
@@ -294,45 +268,29 @@ IMPORTS
 		padding: 1rem;
 	}
 
-	#code-wrapper {
-		width: 100%;
-		background-color: #16161c;
-		/* height: 50%; */
-		overflow: auto;
-		padding: 0.25rem;
-		tab-size: 2;
-		margin-top: 0;
-	}
-
 	.copy-btn {
 		border: 2px solid transparent;
-		border: 2px solid transparent;
+		margin: 0 0 1rem 0;
 		padding: 0.5rem 0.75rem;
-		width: 5.6rem;
+		width: 9rem;
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-start;
 		align-items: center;
 		cursor: pointer;
 	}
+
+	.copy-btn > span {
+		margin-left: 0.25rem;
+	}
+
 	.copy-btn.success {
-		border: 2px solid var(--accent);
+		border: 2px solid #fafbfc;
+		background-color: seagreen;
+		color: #fafbfc;
 	}
 
 	.icon-wrapper {
 		transition: all 0.2s ease;
 	}
-	.icon-wrapper.open {
-		transform: rotate(90deg);
-	}
 
-	.options {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		width: 100%;
-		margin: 0.75rem 0 0.25rem;
-	}
-	.options label {
-		font-size: 0.75rem;
-	}
 </style>

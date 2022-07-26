@@ -26,19 +26,15 @@
 		switch (p.name) {
 			case 'DotScreen':
 				return {
-					instance: new DotScreenPass(
-						p.props.center,
-						p.props.angle,
-						p.props.scale > 11 ? undefined : p.props.scale
-					),
+					instance: new DotScreenPass(p.props.center, p.props.angle, p.props.scale),
 					...p,
-          id: p.id + String(Date.now())
+					id: p.id + String(Date.now())
 				};
 			case 'Glitch':
 				return {
 					instance: new GlitchPass(p.props.dt_size),
 					...p,
-          id: p.id + String(Date.now())
+					id: p.id + String(Date.now())
 				};
 			case 'Film':
 				return {
@@ -49,7 +45,7 @@
 						p.props.grayscale
 					),
 					...p,
-          id: p.id + String(Date.now())
+					id: p.id + String(Date.now())
 				};
 			case 'UnrealBloom':
 				return {
@@ -60,7 +56,7 @@
 						p.props.threshold
 					),
 					...p,
-          id: p.id + String(Date.now())
+					id: p.id + String(Date.now())
 				};
 			case 'SAO':
 				return {
@@ -72,13 +68,13 @@
 						p.props.resolution
 					),
 					...p,
-          id: p.id + String(Date.now())
+					id: p.id + String(Date.now())
 				};
 			case 'Afterimage':
 				return {
 					instance: new AfterimagePass(p.props.damp),
 					...p,
-          id: p.id + String(Date.now())
+					id: p.id + String(Date.now())
 				};
 			default:
 				console.error('Unrecognized Pass Layer:', p);

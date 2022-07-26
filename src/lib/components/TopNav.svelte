@@ -6,7 +6,7 @@
 	<ul>
 		<li>
 			<a class="home" href="/" title="Home" aria-label="Home">
-				<!-- TODO: <img src="./SpatulaLayers.svg" alt="Spatula over layers" height="48" width="48" /> -->
+				<img src="./harmonic.svg" alt="Elbe Philharmonic Hall" height="48" width="48" />
 				<span>PASS COMPOSER</span>
 			</a>
 		</li>
