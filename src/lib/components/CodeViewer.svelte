@@ -85,7 +85,7 @@ import type { Vector2 } from 'three';
 					case 'Glitch':
 						return `<Pass pass={new GlitchPass(${pass.props.dt_size})} />\n`;
 					case 'Film':
-						return `<Pass pass={new FilmPass(${pass.props.noiseIntensity}, ${pass.props.scanlinesIntensity}, ${pass.props.scanlinesCount}, ${pass.props.grayscale}})} />\n`;
+						return `<Pass pass={new FilmPass(${pass.props.noiseIntensity}, ${pass.props.scanlinesIntensity}, ${pass.props.scanlinesCount}, ${pass.props.grayscale})} />\n`;
 					case 'UnrealBloom':
 						return `<Pass pass={new UnrealBloomPass(${vec2String(pass.props.resolution)}, ${pass.props.strength}, ${pass.props.radius}, ${pass.props.threshold})} />\n`;
 					case 'SAO':
@@ -166,7 +166,7 @@ import type { Vector2 } from 'three';
 					<ul class="try-it">
 						<li>
 							<a
-								href="https://svelte.dev/repl/4a50ab27ce0243a9a4b8159a6780accd?version=3.46.2"
+								href="https://svelte.dev/repl/4a50ab27ce0243a9a4b8159a6780accd"
 								target="_blank"
 								rel="noopener noreferrer">Svelte REPL</a
 							>
