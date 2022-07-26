@@ -102,7 +102,7 @@ import type { Vector2 } from 'three';
 	} else {
 		contextString = '';
 	}
-	$: threlteImportString = `import { Pass, ${contextString.length ? 'useThrelte, ': ''}} from 'threlte';`
+	$: threlteImportString = `import { Pass, ${contextString.length ? 'useThrelte, ': ''}} from '@threlte/core';`
 	$: threeImportString = $passLayers.some(p => p.props.resolution || p.props.center) ? `import { Vector2 } from 'three';` : '';
 	$: syncOptions(options.everything);
 </script>

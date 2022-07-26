@@ -16,7 +16,7 @@
 	// 	import { CubeTexturePass } from 'three/examples/jsm/postprocessing/CubeTexturePass'
 
 	import { passLayers } from '$lib/data/stores';
-	import { Pass, useThrelte } from 'threlte';
+	import { Pass, useThrelte } from '@threlte/core';
 	import type { PassLayer } from '$lib/data/types';
 
 	const { renderer, scene, camera } = useThrelte();

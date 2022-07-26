@@ -32,7 +32,7 @@
 
 		<h3 class="code-title">Example Imports:</h3>
 		<pre><code
-				>{`import { Pass, } from 'threlte';
+				>{`import { Pass, } from '@threlte/core';
 import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass';`}</code
 			></pre>
 		<h3 class="code-title">Example HTML:</h3>

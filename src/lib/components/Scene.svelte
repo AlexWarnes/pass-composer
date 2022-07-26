@@ -15,7 +15,7 @@ Color
     Mesh,
     OrbitControls,
     PerspectiveCamera
-  } from "threlte";
+  } from "@threlte/core";
 import PassTranslator from "./PassTranslator.svelte";
 </script>
 
@@ -50,6 +50,3 @@ import PassTranslator from "./PassTranslator.svelte";
 
     <PassTranslator />
   </Canvas>
-
-<style>
-</style>

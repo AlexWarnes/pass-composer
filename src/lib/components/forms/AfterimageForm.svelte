@@ -15,6 +15,7 @@
 			label="damp: {layer.props.damp}"
 			bind:value={layer.props.damp}
 			on:input
+			max={0.99}
 		/>
 	</ControlGroup>
 </Accordion>
