@@ -8,6 +8,7 @@ import type {
 	GlitchProps,
 	PassLayer,
 	PassType,
+	RenderPixelatedProps,
 	SAOProps,
 	UnrealBloomProps
 } from './types';
@@ -50,6 +51,11 @@ const newSAO = (): SAOProps => {
 const newAfterimage = (): AfterimageProps => {
 	return {
 		damp: 0.96,
+	};
+};
+const newRenderPixelated = (): RenderPixelatedProps => {
+	return {
+		pixelSize: 5.0,
 	};
 };
 
@@ -100,6 +106,12 @@ export function newDefaultPass(type: PassType): PassLayer {
 				...initialConfig,
 				requiresContext: false,
 				props: newAfterimage()
+			};
+		case 'RenderPixelated':
+			return {
+				...initialConfig,
+				requiresContext: true,
+				props: newRenderPixelated()
 			};
 		default:
 			const message: string = 'Unrecognized pass type';

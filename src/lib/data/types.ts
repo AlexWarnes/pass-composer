@@ -1,8 +1,8 @@
 import type { Camera, Vector2 } from 'three';
 
-export type PassType = 'Glitch' | 'DotScreen' | 'Film' | 'UnrealBloom' | 'SAO' | 'Afterimage';
-export type PassConfig = GlitchProps | DotScreenProps | FilmProps | UnrealBloomProps | AfterimageProps;
-export type PassLayer = GlitchLayer | DotScreenLayer | FilmLayer | UnrealBloomLayer | AfterimageLayer;
+export type PassType = 'Glitch' | 'DotScreen' | 'Film' | 'UnrealBloom' | 'SAO' | 'Afterimage' | 'RenderPixelated';
+export type PassConfig = GlitchProps | DotScreenProps | FilmProps | UnrealBloomProps | AfterimageProps | RenderPixelatedProps;
+export type PassLayer = GlitchLayer | DotScreenLayer | FilmLayer | UnrealBloomLayer | AfterimageLayer | RenderPixelatedLayer;
 
 /** ADD PASS CHECKLIST
  * In types.ts:
@@ -87,4 +87,10 @@ export interface AfterimageProps {
 }
 export interface AfterimageLayer extends PassLayerMetadata {
 	props: AfterimageProps | any;
+}
+export interface RenderPixelatedProps {
+	pixelSize: number; // 5.0
+}
+export interface RenderPixelatedLayer extends PassLayerMetadata {
+	props: RenderPixelatedProps | any;
 }

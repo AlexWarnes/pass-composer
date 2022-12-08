@@ -8,6 +8,7 @@
 	import SAOForm from './forms/SAOForm.svelte';
 	import AddPassButton from './AddPassButton.svelte';
 	import AfterimageForm from './forms/AfterimageForm.svelte';
+	import RenderPixelatedForm from './forms/RenderPixelatedForm.svelte';
 	function syncPassLayers() {
 		$passLayers = $passLayers;
 	}
@@ -31,6 +32,8 @@
 				<SAOForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
 			{:else if layer.name === 'Afterimage'}
 				<AfterimageForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
+			{:else if layer.name === 'RenderPixelated'}
+				<RenderPixelatedForm {layer} on:input={syncPassLayers} on:change={syncPassLayers} />
 			{/if}
 		</Panel>
 	{:else}

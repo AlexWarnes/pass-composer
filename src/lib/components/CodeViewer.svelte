@@ -72,6 +72,8 @@ import type { Vector2 } from 'three';
 						return `import { SAOPass } from 'three/examples/jsm/postprocessing/SAOPass';\n`;
 					case 'Afterimage':
 						return `import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass';\n`;
+					case 'RenderPixelated':
+						return `import { RenderPixelatedPass } from 'three/examples/jsm/postprocessing/RenderPixelatedPass';\n`;
 					default:
 						return '';
 				}
@@ -92,6 +94,8 @@ import type { Vector2 } from 'three';
 						return `<Pass pass={new SAOPass(scene, $camera, ${pass.props.useDepthTexture}, ${pass.props.useNormals}, ${vec2String(pass.props.resolution)})} />\n`;
 					case 'Afterimage':
 						return `<Pass pass={new AfterimagePass(${pass.props.damp})} />\n`;
+					case 'RenderPixelated':
+						return `<Pass pass={new RenderPixelatedPass(${pass.props.pixelSize}, scene, $camera)} />\n`;
 					default:
 						return '';
 				}

@@ -36,6 +36,6 @@
 	"dependencies": {
 		"@threlte/core": "^4.1.3",
 		"@threlte/extras": "^4.0.1",
-		"three": "^0.142.0"
+		"three": "^0.147.0"
 	}
 }

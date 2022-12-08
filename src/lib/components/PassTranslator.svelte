@@ -10,6 +10,7 @@
 	import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
 	import { SAOPass } from 'three/examples/jsm/postprocessing/SAOPass';
 	import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass';
+	import { RenderPixelatedPass } from 'three/examples/jsm/postprocessing/RenderPixelatedPass';
 
 	// 	import { SSRPass } from 'three/examples/jsm/postprocessing/SSRPass'
 	// 	import { MaskPass } from 'three/examples/jsm/postprocessing/MaskPass'
@@ -73,6 +74,12 @@
 			case 'Afterimage':
 				return {
 					instance: new AfterimagePass(p.props.damp),
+					...p,
+					id: p.id + String(Date.now())
+				};
+			case 'RenderPixelated':
+				return {
+					instance: new RenderPixelatedPass(p.props.pixelSize, scene, $camera),
 					...p,
 					id: p.id + String(Date.now())
 				};

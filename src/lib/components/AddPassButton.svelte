@@ -25,7 +25,8 @@
 		'Film',
 		'UnrealBloom',
 		'SAO',
-		'Afterimage'
+		'Afterimage',
+		'RenderPixelated',
 	];
 	const warningLayers: PassType[] = ['Glitch'];
 </script>
